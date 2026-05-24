@@ -1,0 +1,1199 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Digital Growth Agency — We Build. You Grow.</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+/* ─── RESET & BASE ─────────────────────────────────────────── */
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+:root {
+  --bg:        #080810;
+  --surface:   #0E0E1A;
+  --surface2:  #13131F;
+  --border:    rgba(255,255,255,0.07);
+  --gold:      #F0A500;
+  --gold2:     #FFD166;
+  --white:     #F2F2F8;
+  --muted:     #6B6B88;
+  --green:     #00E5A0;
+  --fs-xl:     clamp(52px, 10vw, 96px);
+  --fs-lg:     clamp(32px, 5vw, 52px);
+  --fs-md:     clamp(20px, 3vw, 28px);
+  --fs-sm:     15px;
+  --radius:    16px;
+  --transition: 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+html { scroll-behavior: smooth; }
+
+body {
+  background: var(--bg);
+  color: var(--white);
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: var(--fs-sm);
+  line-height: 1.7;
+  overflow-x: hidden;
+  cursor: default;
+}
+
+/* ─── NOISE TEXTURE OVERLAY ─────────────────────────────────── */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='1'/%3E%3C/svg%3E");
+  opacity: 0.025;
+  pointer-events: none;
+  z-index: 1000;
+}
+
+/* ─── NAV ──────────────────────────────────────────────────── */
+nav {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: 100;
+  padding: 20px 40px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: rgba(8,8,16,0.7);
+  backdrop-filter: blur(20px);
+  border-bottom: 1px solid var(--border);
+}
+.nav-logo {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-weight: 800;
+  font-size: 18px;
+  letter-spacing: -0.5px;
+  color: var(--white);
+  text-decoration: none;
+}
+.nav-logo span { color: var(--gold); }
+.nav-links { display: flex; gap: 36px; list-style: none; }
+.nav-links a {
+  text-decoration: none;
+  color: var(--muted);
+  font-size: 13px;
+  font-weight: 500;
+  letter-spacing: 0.5px;
+  transition: color 0.3s;
+}
+.nav-links a:hover { color: var(--white); }
+.nav-cta {
+  background: var(--gold);
+  color: #000;
+  padding: 10px 22px;
+  border-radius: 100px;
+  font-size: 13px;
+  font-weight: 700;
+  text-decoration: none;
+  letter-spacing: 0.3px;
+  transition: background 0.3s, transform 0.2s;
+}
+.nav-cta:hover { background: var(--gold2); transform: translateY(-1px); }
+@media(max-width:680px){
+  nav { padding: 16px 20px; }
+  .nav-links { display: none; }
+}
+
+/* ─── HERO ─────────────────────────────────────────────────── */
+#hero {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 140px 40px 80px;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Animated background orbs */
+.orb {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(80px);
+  pointer-events: none;
+  animation: drift 12s ease-in-out infinite alternate;
+}
+.orb-1 { width: 500px; height: 500px; background: rgba(240,165,0,0.07); top: -100px; right: -100px; animation-delay: 0s; }
+.orb-2 { width: 400px; height: 400px; background: rgba(0,229,160,0.05); bottom: 0; left: -80px; animation-delay: -4s; }
+.orb-3 { width: 300px; height: 300px; background: rgba(100,80,255,0.06); top: 40%; left: 30%; animation-delay: -8s; }
+
+@keyframes drift {
+  from { transform: translate(0, 0) scale(1); }
+  to   { transform: translate(30px, -40px) scale(1.08); }
+}
+
+.hero-eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 2.5px;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 28px;
+  opacity: 0;
+  animation: fadeUp 0.8s 0.1s forwards;
+}
+.hero-eyebrow::before {
+  content: '';
+  width: 32px; height: 1.5px;
+  background: var(--gold);
+}
+
+.hero-title {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: var(--fs-xl);
+  font-weight: 800;
+  line-height: 0.95;
+  letter-spacing: -3px;
+  max-width: 800px;
+  opacity: 0;
+  animation: fadeUp 0.9s 0.2s forwards;
+}
+.hero-title .line { display: block; }
+.hero-title .gold-word { color: var(--gold); }
+.hero-title .outlined {
+  -webkit-text-stroke: 1.5px rgba(255,255,255,0.3);
+  color: transparent;
+}
+
+.hero-sub {
+  margin-top: 32px;
+  max-width: 480px;
+  color: var(--muted);
+  font-size: 16px;
+  line-height: 1.8;
+  opacity: 0;
+  animation: fadeUp 0.9s 0.35s forwards;
+}
+
+.hero-actions {
+  margin-top: 44px;
+  display: flex;
+  gap: 16px;
+  flex-wrap: wrap;
+  opacity: 0;
+  animation: fadeUp 0.9s 0.45s forwards;
+}
+.btn-primary {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  background: var(--gold);
+  color: #000;
+  padding: 16px 32px;
+  border-radius: 100px;
+  font-weight: 700;
+  font-size: 15px;
+  text-decoration: none;
+  transition: var(--transition);
+  letter-spacing: -0.2px;
+}
+.btn-primary:hover { background: var(--gold2); transform: translateY(-3px); box-shadow: 0 20px 40px rgba(240,165,0,0.25); }
+.btn-primary svg { transition: transform 0.3s; }
+.btn-primary:hover svg { transform: translateX(4px); }
+.btn-secondary {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  border: 1px solid var(--border);
+  color: var(--white);
+  padding: 16px 32px;
+  border-radius: 100px;
+  font-weight: 500;
+  font-size: 15px;
+  text-decoration: none;
+  transition: var(--transition);
+  background: rgba(255,255,255,0.03);
+}
+.btn-secondary:hover { border-color: rgba(255,255,255,0.2); background: rgba(255,255,255,0.07); transform: translateY(-3px); }
+
+/* Stats bar */
+.hero-stats {
+  position: absolute;
+  bottom: 50px;
+  right: 40px;
+  display: flex;
+  gap: 40px;
+  opacity: 0;
+  animation: fadeUp 0.9s 0.6s forwards;
+}
+@media(max-width:680px){ .hero-stats { position: relative; bottom: auto; right: auto; margin-top: 48px; } }
+.stat-item { text-align: right; }
+@media(max-width:680px){ .stat-item { text-align: left; } }
+.stat-num {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 32px;
+  font-weight: 800;
+  color: var(--white);
+  letter-spacing: -1.5px;
+  line-height: 1;
+}
+.stat-num span { color: var(--gold); }
+.stat-label { font-size: 11px; letter-spacing: 1px; color: var(--muted); text-transform: uppercase; margin-top: 4px; }
+
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(30px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* Hero scroll indicator */
+.scroll-indicator {
+  position: absolute;
+  bottom: 50px;
+  left: 40px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  opacity: 0;
+  animation: fadeUp 1s 0.8s forwards;
+}
+.scroll-line {
+  width: 1px;
+  height: 50px;
+  background: linear-gradient(to bottom, transparent, var(--gold));
+  animation: scrollPulse 2s ease-in-out infinite;
+}
+@keyframes scrollPulse {
+  0%, 100% { opacity: 0.3; transform: scaleY(0.8); }
+  50% { opacity: 1; transform: scaleY(1); }
+}
+.scroll-text { font-size: 10px; letter-spacing: 2px; color: var(--muted); text-transform: uppercase; writing-mode: vertical-rl; }
+
+/* ─── MARQUEE ───────────────────────────────────────────────── */
+.marquee-wrap {
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+  padding: 16px 0;
+  overflow: hidden;
+  background: var(--surface);
+}
+.marquee-track {
+  display: flex;
+  gap: 48px;
+  animation: marquee 20s linear infinite;
+  width: max-content;
+}
+.marquee-item {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  white-space: nowrap;
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+.marquee-dot { width: 4px; height: 4px; background: var(--gold); border-radius: 50%; }
+@keyframes marquee { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+
+/* ─── SECTION BASE ──────────────────────────────────────────── */
+section { padding: 100px 40px; }
+@media(max-width:680px){ section { padding: 70px 20px; } }
+
+.section-label {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 2.5px;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 20px;
+}
+.section-label::before { content: ''; width: 24px; height: 1.5px; background: var(--gold); }
+
+.section-title {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: var(--fs-lg);
+  font-weight: 800;
+  letter-spacing: -2px;
+  line-height: 1.05;
+  max-width: 640px;
+}
+.section-title em { font-style: normal; color: var(--gold); }
+
+/* ─── SERVICES ──────────────────────────────────────────────── */
+#services { background: var(--surface); }
+
+.services-grid {
+  margin-top: 60px;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 2px;
+}
+.service-card {
+  background: var(--bg);
+  padding: 40px 32px;
+  position: relative;
+  overflow: hidden;
+  transition: var(--transition);
+  border: 1px solid var(--border);
+}
+.service-card::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, rgba(240,165,0,0.06), transparent);
+  opacity: 0;
+  transition: opacity 0.4s;
+}
+.service-card:hover { transform: translateY(-6px); border-color: rgba(240,165,0,0.3); }
+.service-card:hover::before { opacity: 1; }
+.service-icon {
+  width: 52px; height: 52px;
+  background: rgba(240,165,0,0.1);
+  border: 1px solid rgba(240,165,0,0.2);
+  border-radius: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 22px;
+  margin-bottom: 24px;
+}
+.service-name {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 18px;
+  font-weight: 700;
+  margin-bottom: 12px;
+  color: var(--white);
+}
+.service-desc { font-size: 14px; color: var(--muted); line-height: 1.7; }
+.service-num {
+  position: absolute;
+  top: 20px; right: 20px;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 11px;
+  font-weight: 700;
+  color: rgba(240,165,0,0.25);
+  letter-spacing: 1px;
+}
+
+/* ─── WORK / PROJECTS ───────────────────────────────────────── */
+#work { max-width: 1200px; margin: 0 auto; padding: 100px 40px; }
+@media(max-width:680px){ #work { padding: 70px 20px; } }
+
+.work-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  margin-bottom: 60px;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+.work-count {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 72px;
+  font-weight: 800;
+  color: rgba(255,255,255,0.05);
+  line-height: 1;
+  letter-spacing: -4px;
+  align-self: flex-start;
+}
+
+.projects-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 20px;
+}
+@media(max-width:680px){ .projects-grid { grid-template-columns: 1fr; } }
+
+.project-card {
+  position: relative;
+  border-radius: var(--radius);
+  overflow: hidden;
+  background: var(--surface2);
+  border: 1px solid var(--border);
+  transition: var(--transition);
+  group: true;
+}
+.project-card:hover { transform: translateY(-8px); box-shadow: 0 30px 60px rgba(0,0,0,0.4); border-color: rgba(240,165,0,0.25); }
+
+/* iframe preview */
+.project-preview {
+  width: 100%;
+  height: 260px;
+  position: relative;
+  overflow: hidden;
+  background: #0a0a12;
+}
+.project-preview iframe {
+  width: 200%;
+  height: 200%;
+  transform: scale(0.5);
+  transform-origin: top left;
+  border: none;
+  pointer-events: none;
+}
+.preview-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to bottom, transparent 40%, var(--surface2) 100%);
+}
+
+/* Live badge */
+.live-badge {
+  position: absolute;
+  top: 14px;
+  right: 14px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  background: rgba(0,229,160,0.15);
+  border: 1px solid rgba(0,229,160,0.3);
+  color: var(--green);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  padding: 5px 10px;
+  border-radius: 100px;
+  backdrop-filter: blur(10px);
+}
+.live-dot {
+  width: 6px; height: 6px;
+  background: var(--green);
+  border-radius: 50%;
+  animation: pulse-green 1.5s ease-in-out infinite;
+}
+@keyframes pulse-green {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.5; transform: scale(0.8); }
+}
+
+.project-info {
+  padding: 24px 28px;
+}
+.project-tag {
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 8px;
+}
+.project-name {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 22px;
+  font-weight: 800;
+  letter-spacing: -0.8px;
+  margin-bottom: 10px;
+  color: var(--white);
+}
+.project-desc { font-size: 13px; color: var(--muted); line-height: 1.6; margin-bottom: 20px; }
+
+.project-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.project-pills { display: flex; gap: 6px; flex-wrap: wrap; }
+.pill {
+  font-size: 10px;
+  padding: 4px 10px;
+  border-radius: 100px;
+  background: rgba(255,255,255,0.05);
+  border: 1px solid var(--border);
+  color: var(--muted);
+  letter-spacing: 0.5px;
+}
+.project-link {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  color: var(--gold);
+  text-decoration: none;
+  font-size: 13px;
+  font-weight: 600;
+  transition: gap 0.3s;
+  white-space: nowrap;
+}
+.project-link:hover { gap: 10px; }
+
+/* ─── WHY US ────────────────────────────────────────────────── */
+#why {
+  background: var(--surface);
+  position: relative;
+  overflow: hidden;
+}
+#why::before {
+  content: '';
+  position: absolute;
+  width: 600px; height: 600px;
+  background: radial-gradient(circle, rgba(240,165,0,0.05) 0%, transparent 70%);
+  top: -200px; right: -200px;
+  pointer-events: none;
+}
+
+.why-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 60px;
+  align-items: center;
+  max-width: 1100px;
+  margin: 0 auto;
+}
+@media(max-width:768px){ .why-grid { grid-template-columns: 1fr; gap: 40px; } }
+
+.why-points { margin-top: 20px; display: flex; flex-direction: column; gap: 0; }
+.why-point {
+  display: flex;
+  gap: 20px;
+  padding: 24px 0;
+  border-bottom: 1px solid var(--border);
+  transition: background 0.3s;
+}
+.why-point:first-child { border-top: 1px solid var(--border); }
+.why-icon {
+  width: 40px; height: 40px;
+  background: rgba(240,165,0,0.1);
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+.why-text h4 { font-family: 'Plus Jakarta Sans', sans-serif; font-size: 16px; font-weight: 700; margin-bottom: 4px; }
+.why-text p { font-size: 13px; color: var(--muted); line-height: 1.7; }
+
+/* Big number visual */
+.why-visual {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+.big-metric {
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 32px;
+  position: relative;
+  overflow: hidden;
+  transition: var(--transition);
+}
+.big-metric:hover { border-color: rgba(240,165,0,0.3); transform: translateX(6px); }
+.big-metric::before {
+  content: '';
+  position: absolute;
+  left: 0; top: 0; bottom: 0;
+  width: 3px;
+  background: var(--gold);
+  border-radius: 0 2px 2px 0;
+}
+.metric-val {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 48px;
+  font-weight: 800;
+  letter-spacing: -2px;
+  color: var(--white);
+  line-height: 1;
+}
+.metric-val span { color: var(--gold); }
+.metric-label { font-size: 13px; color: var(--muted); margin-top: 6px; }
+
+/* ─── PACKAGES ──────────────────────────────────────────────── */
+#packages { max-width: 1100px; margin: 0 auto; padding: 100px 40px; }
+@media(max-width:680px){ #packages { padding: 70px 20px; } }
+
+.packages-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+  margin-top: 60px;
+  align-items: start;
+}
+@media(max-width:900px){ .packages-grid { grid-template-columns: 1fr; max-width: 420px; } }
+
+.pkg-card {
+  background: var(--surface2);
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  padding: 36px 28px;
+  transition: var(--transition);
+  position: relative;
+}
+.pkg-card:hover { transform: translateY(-6px); }
+.pkg-card.featured {
+  background: linear-gradient(145deg, #1A1408, #0F0F1A);
+  border-color: var(--gold);
+  transform: translateY(-10px);
+  box-shadow: 0 30px 60px rgba(240,165,0,0.1);
+}
+.pkg-card.featured:hover { transform: translateY(-16px); }
+.pkg-popular {
+  position: absolute;
+  top: -13px;
+  left: 50%; transform: translateX(-50%);
+  background: var(--gold);
+  color: #000;
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  padding: 5px 16px;
+  border-radius: 100px;
+  white-space: nowrap;
+}
+.pkg-tier {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 8px;
+}
+.pkg-price-val {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 40px;
+  font-weight: 800;
+  letter-spacing: -2px;
+  color: var(--white);
+  line-height: 1;
+  margin-bottom: 4px;
+}
+.pkg-price-note { font-size: 12px; color: var(--muted); margin-bottom: 24px; }
+.pkg-divider { height: 1px; background: var(--border); margin: 20px 0; }
+.pkg-features { list-style: none; display: flex; flex-direction: column; gap: 12px; margin-bottom: 28px; }
+.pkg-features li {
+  display: flex;
+  gap: 10px;
+  font-size: 13px;
+  color: #cccce0;
+  line-height: 1.4;
+}
+.pkg-features li::before {
+  content: '✓';
+  color: var(--green);
+  font-weight: 700;
+  flex-shrink: 0;
+  font-size: 12px;
+  margin-top: 1px;
+}
+.pkg-btn {
+  display: block;
+  text-align: center;
+  padding: 14px;
+  border-radius: 100px;
+  font-size: 14px;
+  font-weight: 700;
+  text-decoration: none;
+  transition: var(--transition);
+}
+.pkg-btn-outline { border: 1px solid var(--border); color: var(--white); }
+.pkg-btn-outline:hover { border-color: var(--gold); color: var(--gold); }
+.pkg-btn-filled { background: var(--gold); color: #000; }
+.pkg-btn-filled:hover { background: var(--gold2); transform: translateY(-2px); box-shadow: 0 12px 30px rgba(240,165,0,0.3); }
+
+/* ─── CTA SECTION ───────────────────────────────────────────── */
+#cta {
+  padding: 100px 40px;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+@media(max-width:680px){ #cta { padding: 70px 20px; } }
+.cta-bg {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse 80% 60% at 50% 50%, rgba(240,165,0,0.07) 0%, transparent 70%);
+}
+.cta-inner { position: relative; z-index: 1; max-width: 680px; margin: 0 auto; }
+.cta-title {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: var(--fs-lg);
+  font-weight: 800;
+  letter-spacing: -2px;
+  line-height: 1.05;
+  margin-bottom: 20px;
+}
+.cta-title em { font-style: normal; color: var(--gold); }
+.cta-sub { color: var(--muted); font-size: 16px; margin-bottom: 40px; line-height: 1.7; }
+.cta-actions { display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; }
+
+/* WhatsApp btn */
+.btn-whatsapp {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  background: #25D366;
+  color: #fff;
+  padding: 16px 32px;
+  border-radius: 100px;
+  font-weight: 700;
+  font-size: 15px;
+  text-decoration: none;
+  transition: var(--transition);
+}
+.btn-whatsapp:hover { background: #1ebe58; transform: translateY(-3px); box-shadow: 0 16px 40px rgba(37,211,102,0.3); }
+
+/* ─── FOOTER ────────────────────────────────────────────────── */
+footer {
+  border-top: 1px solid var(--border);
+  padding: 40px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 16px;
+  background: var(--surface);
+}
+.footer-logo {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-weight: 800;
+  font-size: 16px;
+  color: var(--white);
+}
+.footer-logo span { color: var(--gold); }
+.footer-copy { font-size: 12px; color: var(--muted); }
+.footer-links { display: flex; gap: 24px; }
+.footer-links a { font-size: 12px; color: var(--muted); text-decoration: none; transition: color 0.3s; }
+.footer-links a:hover { color: var(--white); }
+
+/* ─── REVEAL ANIMATIONS ─────────────────────────────────────── */
+.reveal {
+  opacity: 0;
+  transform: translateY(40px);
+  transition: opacity 0.8s cubic-bezier(0.16,1,0.3,1), transform 0.8s cubic-bezier(0.16,1,0.3,1);
+}
+.reveal.visible { opacity: 1; transform: translateY(0); }
+.reveal-delay-1 { transition-delay: 0.1s; }
+.reveal-delay-2 { transition-delay: 0.2s; }
+.reveal-delay-3 { transition-delay: 0.3s; }
+.reveal-delay-4 { transition-delay: 0.4s; }
+
+/* ─── MOBILE NAV HAMBURGER ──────────────────────────────────── */
+@media(max-width:680px){ #hero { padding: 120px 20px 70px; } }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="#" class="nav-logo">Digital<span>Growth</span></a>
+  <ul class="nav-links">
+    <li><a href="#services">Services</a></li>
+    <li><a href="#work">Work</a></li>
+    <li><a href="#packages">Packages</a></li>
+    <li><a href="#cta">Contact</a></li>
+  </ul>
+  <a href="+917055356617" class="nav-cta" target="_blank">Get Started →</a>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="orb orb-1"></div>
+  <div class="orb orb-2"></div>
+  <div class="orb orb-3"></div>
+
+  <div class="hero-eyebrow">Restaurant Digital Agency</div>
+
+  <h1 class="hero-title">
+    <span class="line">We Build.</span>
+    <span class="line gold-word">You Grow.</span>
+    <span class="line outlined">Restaurants Win.</span>
+  </h1>
+
+  <p class="hero-sub">
+    We turn invisible restaurants into fully booked ones. Professional websites, Google rankings, and social media — everything your restaurant needs to dominate online.
+  </p>
+
+  <div class="hero-actions">
+    <a href="#work" class="btn-primary">
+      View Our Work
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+    </a>
+    <a href="#packages" class="btn-secondary">See Packages</a>
+  </div>
+
+  <div class="hero-stats">
+    <div class="stat-item">
+      <div class="stat-num">4<span>+</span></div>
+      <div class="stat-label">Live Projects</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-num">100<span>%</span></div>
+      <div class="stat-label">Client Satisfaction</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-num">3<span>x</span></div>
+      <div class="stat-label">Avg Traffic Growth</div>
+    </div>
+  </div>
+
+  <div class="scroll-indicator">
+    <div class="scroll-line"></div>
+    <div class="scroll-text">Scroll</div>
+  </div>
+</section>
+
+<!-- MARQUEE -->
+<div class="marquee-wrap">
+  <div class="marquee-track">
+    <div class="marquee-item"><span class="marquee-dot"></span> Website Development</div>
+    <div class="marquee-item"><span class="marquee-dot"></span> Google SEO</div>
+    <div class="marquee-item"><span class="marquee-dot"></span> Social Media Management</div>
+    <div class="marquee-item"><span class="marquee-dot"></span> Google Business Setup</div>
+    <div class="marquee-item"><span class="marquee-dot"></span> Digital Marketing</div>
+    <div class="marquee-item"><span class="marquee-dot"></span> Business Consulting</div>
+    <div class="marquee-item"><span class="marquee-dot"></span> Website Development</div>
+    <div class="marquee-item"><span class="marquee-dot"></span> Google SEO</div>
+    <div class="marquee-item"><span class="marquee-dot"></span> Social Media Management</div>
+    <div class="marquee-item"><span class="marquee-dot"></span> Google Business Setup</div>
+    <div class="marquee-item"><span class="marquee-dot"></span> Digital Marketing</div>
+    <div class="marquee-item"><span class="marquee-dot"></span> Business Consulting</div>
+  </div>
+</div>
+
+<!-- SERVICES -->
+<section id="services">
+  <div style="max-width:1100px; margin:0 auto;">
+    <div class="section-label reveal">What We Do</div>
+    <h2 class="section-title reveal reveal-delay-1">Every service your<br><em>restaurant needs</em></h2>
+    <div class="services-grid" style="margin-top:50px;">
+      <div class="service-card reveal reveal-delay-1">
+        <div class="service-num">01</div>
+        <div class="service-icon">🌐</div>
+        <div class="service-name">Website Development</div>
+        <div class="service-desc">Fast, mobile-first restaurant websites with menu, gallery, booking, and WhatsApp integration — built to convert visitors into customers.</div>
+      </div>
+      <div class="service-card reveal reveal-delay-2">
+        <div class="service-num">02</div>
+        <div class="service-icon">📍</div>
+        <div class="service-name">Google Business & SEO</div>
+        <div class="service-desc">Get found when hungry customers search "restaurant near me." We optimize your Google profile and rank you above the competition.</div>
+      </div>
+      <div class="service-card reveal reveal-delay-3">
+        <div class="service-num">03</div>
+        <div class="service-icon">📱</div>
+        <div class="service-name">Social Media Management</div>
+        <div class="service-desc">Consistent, high-quality posts on Instagram and Facebook. Reels, food photography content, and engagement — handled for you.</div>
+      </div>
+      <div class="service-card reveal reveal-delay-4">
+        <div class="service-num">04</div>
+        <div class="service-icon">📊</div>
+        <div class="service-name">Business Consulting</div>
+        <div class="service-desc">Online ordering integration, review management strategy, and monthly growth reports — so you always know what's working.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- WORK / PROJECTS -->
+<section id="work" style="padding:0;">
+<div id="work" style="max-width:1200px; margin:0 auto; padding:100px 40px;">
+
+  <div class="work-header">
+    <div>
+      <div class="section-label reveal">Our Work</div>
+      <h2 class="section-title reveal reveal-delay-1">Real restaurants,<br><em>real results</em></h2>
+    </div>
+    <div class="work-count reveal">04</div>
+  </div>
+
+  <div class="projects-grid">
+
+    <!-- Project 1: Down Town Cafe -->
+    <div class="project-card reveal reveal-delay-1">
+      <div class="project-preview">
+        <iframe src="https://down-town-cafe-phi.vercel.app/" title="Down Town Cafe" loading="lazy" sandbox="allow-scripts allow-same-origin"></iframe>
+        <div class="preview-overlay"></div>
+        <div class="live-badge"><div class="live-dot"></div> Live</div>
+      </div>
+      <div class="project-info">
+        <div class="project-tag">Cafe &amp; Bistro</div>
+        <div class="project-name">Down Town Cafe</div>
+        <div class="project-desc">Modern cafe website with full menu display, ambiance gallery, and seamless WhatsApp ordering integration.</div>
+        <div class="project-footer">
+          <div class="project-pills">
+            <span class="pill">Website</span>
+            <span class="pill">Mobile</span>
+            <span class="pill">WhatsApp</span>
+          </div>
+          <a href="https://down-town-cafe-phi.vercel.app/" target="_blank" class="project-link">
+            Visit Live
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Project 2: TFC Restaurant -->
+    <div class="project-card reveal reveal-delay-2">
+      <div class="project-preview">
+        <iframe src="https://tfc-resturant.vercel.app/" title="TFC Restaurant" loading="lazy" sandbox="allow-scripts allow-same-origin"></iframe>
+        <div class="preview-overlay"></div>
+        <div class="live-badge"><div class="live-dot"></div> Live</div>
+      </div>
+      <div class="project-info">
+        <div class="project-tag">Restaurant</div>
+        <div class="project-name">TFC Restaurant</div>
+        <div class="project-desc">Full-featured restaurant website with menu categories, location map, and a clean customer-focused design.</div>
+        <div class="project-footer">
+          <div class="project-pills">
+            <span class="pill">Website</span>
+            <span class="pill">SEO</span>
+            <span class="pill">Maps</span>
+          </div>
+          <a href="https://tfc-resturant.vercel.app/" target="_blank" class="project-link">
+            Visit Live
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Project 3: Yellow Hills -->
+    <div class="project-card reveal reveal-delay-3">
+      <div class="project-preview">
+        <iframe src="https://yellow-hills.vercel.app/" title="Yellow Hills" loading="lazy" sandbox="allow-scripts allow-same-origin"></iframe>
+        <div class="preview-overlay"></div>
+        <div class="live-badge"><div class="live-dot"></div> Live</div>
+      </div>
+      <div class="project-info">
+        <div class="project-tag">Restaurant &amp; Lounge</div>
+        <div class="project-name">Yellow Hills</div>
+        <div class="project-desc">Vibrant restaurant website with strong brand identity, interactive menu, and social media integration.</div>
+        <div class="project-footer">
+          <div class="project-pills">
+            <span class="pill">Website</span>
+            <span class="pill">Branding</span>
+            <span class="pill">Social</span>
+          </div>
+          <a href="https://yellow-hills.vercel.app/" target="_blank" class="project-link">
+            Visit Live
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Project 4: Shiva Dhaba -->
+    <div class="project-card reveal reveal-delay-4">
+      <div class="project-preview">
+        <iframe src="https://shivatouristdhaba.vercel.app/" title="Shiva Tourist Dhaba" loading="lazy" sandbox="allow-scripts allow-same-origin"></iframe>
+        <div class="preview-overlay"></div>
+        <div class="live-badge"><div class="live-dot"></div> Live</div>
+      </div>
+      <div class="project-info">
+        <div class="project-tag">Dhaba &amp; Highway</div>
+        <div class="project-name">Shiva Tourist Dhaba</div>
+        <div class="project-desc">Authentic dhaba digital presence with Google Maps prominence, contact integration, and local SEO optimization.</div>
+        <div class="project-footer">
+          <div class="project-pills">
+            <span class="pill">Website</span>
+            <span class="pill">Local SEO</span>
+            <span class="pill">Google</span>
+          </div>
+          <a href="https://shivatouristdhaba.vercel.app/" target="_blank" class="project-link">
+            Visit Live
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+          </a>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+</section>
+
+<!-- WHY US -->
+<section id="why">
+  <div class="why-grid">
+    <div>
+      <div class="section-label reveal">Why Choose Us</div>
+      <h2 class="section-title reveal reveal-delay-1">We specialize in <em>restaurants only</em></h2>
+
+      <div class="why-points">
+        <div class="why-point reveal reveal-delay-1">
+          <div class="why-icon">🎯</div>
+          <div class="why-text">
+            <h4>Niche Experts</h4>
+            <p>We only work with food businesses — restaurants, cafes, dhabas. Deep expertise means better results for you.</p>
+          </div>
+        </div>
+        <div class="why-point reveal reveal-delay-2">
+          <div class="why-icon">⚡</div>
+          <div class="why-text">
+            <h4>Fast Delivery</h4>
+            <p>Your website goes live in 5–7 days. No long waits, no delays. You start getting customers faster.</p>
+          </div>
+        </div>
+        <div class="why-point reveal reveal-delay-3">
+          <div class="why-icon">📈</div>
+          <div class="why-text">
+            <h4>Results You Can See</h4>
+            <p>Monthly reports with Google rankings, website visitors, and call tracking. Real numbers, real growth.</p>
+          </div>
+        </div>
+        <div class="why-point reveal reveal-delay-4">
+          <div class="why-icon">🤝</div>
+          <div class="why-text">
+            <h4>Dedicated Support</h4>
+            <p>WhatsApp support, always. We're your digital partner — not just a vendor who disappears after delivery.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="why-visual reveal reveal-delay-2">
+      <div class="big-metric">
+        <div class="metric-val">5–7<span> Days</span></div>
+        <div class="metric-label">Average website delivery time</div>
+      </div>
+      <div class="big-metric">
+        <div class="metric-val">3<span>x</span></div>
+        <div class="metric-label">Average increase in online visibility</div>
+      </div>
+      <div class="big-metric">
+        <div class="metric-val">4<span>+</span></div>
+        <div class="metric-label">Restaurants already growing with us</div>
+      </div>
+      <div class="big-metric">
+        <div class="metric-val">100<span>%</span></div>
+        <div class="metric-label">Client satisfaction rate</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PACKAGES -->
+<section id="packages" style="padding:0;">
+<div style="max-width:1100px; margin:0 auto; padding:100px 40px;">
+  <div style="text-align:center;">
+    <div class="section-label reveal" style="justify-content:center;">Packages</div>
+    <h2 class="section-title reveal reveal-delay-1" style="margin:0 auto; text-align:center; max-width:500px;">Simple, transparent <em>pricing</em></h2>
+    <p style="color:var(--muted); margin-top:16px; font-size:15px;" class="reveal reveal-delay-2">No hidden costs. No long-term lock-ins. Cancel anytime.</p>
+  </div>
+
+  <div class="packages-grid">
+    <!-- Starter -->
+    <div class="pkg-card reveal reveal-delay-1">
+      <div class="pkg-tier">🥉 Starter</div>
+      <div class="pkg-price-val">₹7,999</div>
+      <div class="pkg-price-note">One-time payment</div>
+      <div class="pkg-divider"></div>
+      <ul class="pkg-features">
+        <li>3–5 Page Professional Website</li>
+        <li>Mobile Responsive Design</li>
+        <li>Menu + Contact + Gallery Page</li>
+        <li>Google Maps Embed</li>
+        <li>WhatsApp Chat Button</li>
+        <li>Basic SEO Setup</li>
+        <li>1 Month Free Support</li>
+      </ul>
+      <a href="#cta" class="pkg-btn pkg-btn-outline">Get Started</a>
+    </div>
+
+    <!-- Growth -->
+    <div class="pkg-card featured reveal reveal-delay-2">
+      <div class="pkg-popular">⭐ Most Popular</div>
+      <div class="pkg-tier" style="color:var(--gold);">🥇 Growth</div>
+      <div class="pkg-price-val">₹14,999</div>
+      <div class="pkg-price-note">Setup + ₹3,999/month</div>
+      <div class="pkg-divider"></div>
+      <ul class="pkg-features">
+        <li>Everything in Starter</li>
+        <li>Google Business Profile Optimized</li>
+        <li>Instagram Page Setup</li>
+        <li>12 Social Media Posts/Month</li>
+        <li>Zomato/Swiggy Links Integration</li>
+        <li>Monthly Google Ranking Report</li>
+        <li>Review Management Strategy</li>
+        <li>Monthly Performance Call</li>
+      </ul>
+      <a href="#cta" class="pkg-btn pkg-btn-filled">Get Started</a>
+    </div>
+
+    <!-- Premium -->
+    <div class="pkg-card reveal reveal-delay-3">
+      <div class="pkg-tier">💎 Premium</div>
+      <div class="pkg-price-val">₹24,999</div>
+      <div class="pkg-price-note">Setup + ₹7,999/month</div>
+      <div class="pkg-divider"></div>
+      <ul class="pkg-features">
+        <li>Everything in Growth</li>
+        <li>Full Social Media Management</li>
+        <li>4 Reels / Videos Per Month</li>
+        <li>Google Ads Management</li>
+        <li>Monthly Competitor Analysis</li>
+        <li>WhatsApp Marketing Setup</li>
+        <li>Dedicated Account Manager</li>
+        <li>Priority 24hr Support</li>
+      </ul>
+      <a href="#cta" class="pkg-btn pkg-btn-outline">Get Started</a>
+    </div>
+  </div>
+</div>
+</section>
+
+<!-- CTA -->
+<section id="cta">
+  <div class="cta-bg"></div>
+  <div class="cta-inner">
+    <div class="section-label reveal" style="justify-content:center;">Ready to Grow?</div>
+    <h2 class="cta-title reveal reveal-delay-1">Your restaurant deserves<br>to be <em>fully booked</em></h2>
+    <p class="cta-sub reveal reveal-delay-2">
+      Let's talk. Tell us about your restaurant and we'll show you exactly how we can grow your online presence — no commitment required.
+    </p>
+    <div class="cta-actions reveal reveal-delay-3">
+      <a href="+917055356617" target="_blank" class="btn-whatsapp">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.127.558 4.117 1.532 5.847L.057 23.882l6.197-1.625A11.945 11.945 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.818a9.8 9.8 0 01-5.012-1.371l-.36-.214-3.728.978 1.003-3.642-.234-.373A9.792 9.792 0 012.182 12C2.182 6.58 6.58 2.182 12 2.182c5.42 0 9.818 4.398 9.818 9.818 0 5.42-4.398 9.818-9.818 9.818z"/></svg>
+        Chat on WhatsApp
+      </a>
+      <a href="choudharywaseem154@gmail.com" class="btn-secondary">
+        Send an Email →
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-logo">Digital<span>Growth</span> Agency</div>
+  <div class="footer-copy">© 2025 Digital Growth Agency. All rights reserved.</div>
+  <div class="footer-links">
+    <a href="#services">Services</a>
+    <a href="#work">Work</a>
+    <a href="#packages">Packages</a>
+    <a href="#cta">Contact</a>
+  </div>
+</footer>
+
+<script>
+// ── Scroll reveal
+const revealEls = document.querySelectorAll('.reveal');
+const io = new IntersectionObserver((entries) => {
+  entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); io.unobserve(e.target); } });
+}, { threshold: 0.12 });
+revealEls.forEach(el => io.observe(el));
+
+// ── Nav active state on scroll
+const sections = document.querySelectorAll('section[id], div[id]');
+const navLinks  = document.querySelectorAll('.nav-links a');
+window.addEventListener('scroll', () => {
+  let current = '';
+  sections.forEach(s => {
+    if (window.scrollY >= s.offsetTop - 120) current = s.id;
+  });
+  navLinks.forEach(a => {
+    a.style.color = a.getAttribute('href') === `#${current}` ? 'var(--white)' : '';
+  });
+  // Nav background on scroll
+  document.querySelector('nav').style.borderBottomColor =
+    window.scrollY > 20 ? 'rgba(255,255,255,0.08)' : 'transparent';
+});
+</script>
+</body>
+</html>
